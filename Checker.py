@@ -2,10 +2,13 @@ import selenium
 from selenium import webdriver
 # get the chromedriver from my mac's bin
 browser = webdriver.Chrome('/usr/local/bin/chromedriver')
-# read and write. diff files.
-# names = list to check from
+# take the names you want to check from
+# names.txt, and it will output which ones
+# are avilable to available.txt and all
+# unavailable to not_available.txt
 names = open('names.txt', 'r')
 available = open('available.txt', 'w')
+not_available = open('not_available.txt', 'w')
 
 def checkthatshit(string) :
     # check the grailed URL for the word
@@ -16,6 +19,10 @@ def checkthatshit(string) :
     if (browser.current_url == 'https://www.grailed.com/404') :
         string.strip()
         available.write(string)
+    elif not (browser.current_url == 'https://www.grailed.com/404') :
+        string.strip()  
+        not_available.write(string)
+        
         
 # check the list
 for line in names :
@@ -24,4 +31,5 @@ for line in names :
 # close the files
 names.close()
 available.close()
+not_available.close()
 print("Checker finished.")
